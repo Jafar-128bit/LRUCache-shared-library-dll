@@ -1,7 +1,7 @@
 #pragma once
 
 #ifdef LRUCACHE_EXPORTS
-#define LRUCACHE_API __declspec(dllexport)
+#define LRUCACHE_EXPORTS __declspec(dllexport)
 
 #include <iostream>
 #include <unordered_map>
@@ -109,13 +109,11 @@ public:
         return *this;
     }
 
-    LRUCACHE_API ValueType get(int key);
+    LRUCACHE_EXPORTS ValueType get(int key);
 
-    LRUCACHE_API void put(int key, const ValueType& value);
+    LRUCACHE_EXPORTS void put(int key, const ValueType& value);
 
-    LRUCACHE_API std::vector<std::pair<int, ValueType>> getCacheData();
+    LRUCACHE_EXPORTS std::vector<std::pair<int, ValueType>> getCacheData();
 };
 
-#else
-#define LRUCACHE_API __declspec(dllimport)
 #endif
