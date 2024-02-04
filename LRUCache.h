@@ -61,6 +61,54 @@ private:
 public:
     LRUCache(int capacity) : capacity(capacity), head(nullptr), tail(nullptr) {}
 
+    ~LRUCache() {
+        // Destructor to deallocate memory for all nodes
+        Node* current = head;
+        while (current) {
+            Node* temp = current;
+            current = current->next;
+            delete temp;
+        }
+    }
+
+    // Copy operations are disabled to prevent issues related to dynamic memory
+    LRUCache(const LRUCache& other) = delete;
+    LRUCache& operator=(const LRUCache& other) = delete;
+
+    // Move constructor
+    LRUCache(LRUCache&& other) noexcept : capacity(other.capacity), head(other.head), tail(other.tail), cache(std::move(other.cache)) {
+        // Reset the other object
+        other.capacity = 0;
+        other.head = nullptr;
+        other.tail = nullptr;
+    }
+
+    // Move assignment operator
+    LRUCache& operator=(LRUCache&& other) noexcept {
+        if (this != &other) {
+            // Destructor to deallocate memory for current object
+            Node* current = head;
+            while (current) {
+                Node* temp = current;
+                current = current->next;
+                delete temp;
+            }
+
+            // Move resources from other to current object
+            capacity = other.capacity;
+            head = other.head;
+            tail = other.tail;
+            cache = std::move(other.cache);
+
+            // Reset the other object
+            other.capacity = 0;
+            other.head = nullptr;
+            other.tail = nullptr;
+        }
+
+        return *this;
+    }
+
     LRUCACHE_API ValueType get(int key);
 
     LRUCACHE_API void put(int key, const ValueType& value);

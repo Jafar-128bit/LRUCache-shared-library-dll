@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "LRUCache.h"
 
 template <typename ValueType>
 ValueType LRUCache<ValueType>::get(int key) {
